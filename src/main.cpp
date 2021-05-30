@@ -31,7 +31,7 @@
 #include "./apps/tools/print_debug.h"
 #include "./apps/tools/time_config.h"
 #include "./apps/tools/water_level.h"
-#include "./apps/watchfaces/watchface.h"
+#include "./apps/watchfaces/watchfaceRIC.h"
 #include "./apps/watchfaces/watchface_binary.h"
 #include "./apps/watchfaces/watchface_digital.h"
 #include "./overlays/overlays.h"
@@ -66,8 +66,7 @@ void setup() {
   // Fire off the service manager
   OswServiceManager::getInstance().setup(hal);
 
-  watchFaceSwitcher->registerApp(new OswAppWatchface());
-  watchFaceSwitcher->registerApp(new OswAppWatchfaceDigital());
+  watchFaceSwitcher->registerApp(new OswAppWatchfaceRIC());
   watchFaceSwitcher->registerApp(new OswAppWatchfaceBinary());
   mainAppSwitcher->registerApp(watchFaceSwitcher);
 
@@ -121,8 +120,8 @@ void loop() {
     // games
     // mainAppSwitcher->registerApp(new OswAppSnakeGame());
     // tools
-    // mainAppSwitcher->registerApp(new OswAppStopWatch());
-    // mainAppSwitcher->registerApp(new OswAppWaterLevel());
+    mainAppSwitcher->registerApp(new OswAppStopWatch());
+    mainAppSwitcher->registerApp(new OswAppWaterLevel());
 #ifdef LUA_SCRIPTS
     mainAppSwitcher->registerApp(new OswLuaApp("stopwatch.lua"));
 #endif
