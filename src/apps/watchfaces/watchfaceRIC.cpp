@@ -17,8 +17,14 @@ void OswAppWatchfaceRIC::drawWatch(OswHal* hal) {
   hal->gfx()->drawHourTicks(120, 120, 117, 107, ui->getForegroundColor());
 
   uint32_t steps = hal->getStepCount();
-  hal->gfx()->drawArc(120, 120, 0, 360 * (steps / 10800.0), 90, 93, 6,
-                      steps > 10800 ? ui->getSuccessColor() : ui->getInfoColor(), true);
+
+  uint32_t stepGoal = 10800;
+  if(steps <= stepGoal){
+      hal->gfx()->drawArc(120, 120, 0, 360 * steps / stepGoal, 90, 93, 6,ui->getInfoColor(), true);
+  } else {
+      hal->gfx()->drawArc(120, 120, 360 * (steps - stepGoal) / stepGoal, 360, 90, 93, 6,ui->getInfoColor(), true);
+      hal->gfx()->drawArc(120, 120, 0, 360 * (steps - stepGoal) / stepGoal, 90, 93, 6, ui->getSuccessColor(), true);
+  }
 
   // below two arcs take too long to draw
 
