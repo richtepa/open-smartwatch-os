@@ -17,6 +17,7 @@ class OswAppWatchfaceRIC : public OswApp {
  private:
   OswUI* ui;
   void drawWatch(OswHal* hal);
+  bool resetStepsPossible = true;
 };
 
 #endif

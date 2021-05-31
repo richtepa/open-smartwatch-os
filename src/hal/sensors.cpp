@@ -319,4 +319,9 @@ float OswHal::getAccelerationZ(void) { return accelZ; };
 
 uint32_t OswHal::getStepCount(void) { return step_count; };
 
+void OswHal::resetStepCount(void) {
+  bma400_soft_reset(&bma);
+  this->setupSensors();
+}
+
 uint8_t OswHal::getActivityMode(void) { return act_int; };

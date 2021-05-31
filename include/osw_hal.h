@@ -129,6 +129,7 @@ class OswHal {
   float getAccelerationY(void);
   float getAccelerationZ(void);
   uint32_t getStepCount(void);
+  void resetStepCount(void);
   uint8_t getActivityMode(void);
 
   // Time

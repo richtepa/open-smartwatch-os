@@ -89,6 +89,13 @@ void OswAppWatchfaceRIC::loop(OswHal* hal) {
     hal->decreaseBrightness(25);
   }
 
+  if(hal->btnIsDownSince(BUTTON_3) > 500 && hal->btnIsDownSince(BUTTON_2) > 500 && resetStepsPossible){
+      resetStepsPossible = false;
+      hal->resetStepCount();
+  } else {
+      resetStepsPossible = true;
+  }
+
 #ifdef GIF_BG
   // if (millis() - 1000 > lastDraw) {
   bgGif->loop(hal);
