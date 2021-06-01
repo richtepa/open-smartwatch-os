@@ -89,13 +89,6 @@ void OswAppWatchfaceRIC::loop(OswHal* hal) {
     hal->decreaseBrightness(25);
   }
 
-  if(hal->btnIsDownSince(BUTTON_3) > 500 && hal->btnIsDownSince(BUTTON_2) > 500 && resetStepsPossible){
-      resetStepsPossible = false;
-      hal->resetStepCount();
-  } else {
-      resetStepsPossible = true;
-  }
-
 #ifdef GIF_BG
   // if (millis() - 1000 > lastDraw) {
   bgGif->loop(hal);
@@ -106,6 +99,29 @@ void OswAppWatchfaceRIC::loop(OswHal* hal) {
 #endif
 
   drawWatch(hal);
+
+  if(hal->btnIsDown(BUTTON_3) && hal->btnIsDown(BUTTON_2)){
+    uint32_t presstime = 500;
+
+    uint32_t b3 = hal->btnIsDownSince(BUTTON_3);
+    uint32_t b2 = hal->btnIsDownSince(BUTTON_2);
+    uint32_t min = b3;
+    if(b2 < b3){
+        min = b2;
+    }
+
+    hal->gfx()->drawArc(120, 120, 0, 360 * min / presstime, 90, 93, 6, ui->getWarningColor(), true);
+
+    if(min > presstime && resetStepsPossible){
+        resetStepsPossible = false;
+        hal->resetStepCount();
+    } else {
+        resetStepsPossible = true;
+    }
+  } else {
+      resetStepsPossible = true;
+  }
+
   hal->requestFlush();
 }
 
